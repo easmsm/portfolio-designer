@@ -40,6 +40,8 @@ User.init(
     },
     admin: {
       type: DataTypes.BOOLEAN,
+      allowNull: false,
+      default: 0
     }
   },
   {
