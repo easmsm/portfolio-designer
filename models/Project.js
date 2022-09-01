@@ -16,7 +16,11 @@ class Project extends Model {
         attributes: [
           'id',
           'repo',
-          'lanuage',
+          'language',
+          'languageColor',
+          'link',
+          'description',
+          'stars'
           [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE project.id = vote.project_id)'), 'vote_count']
         ],
         include: [
