@@ -47,24 +47,41 @@ Project.init(
       primaryKey: true,
       autoIncrement: true
     },
-    title: {
+    repo: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    project_url: {
+    link: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isURL: true
       }
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'user',
-        key: 'id'
-      }
-    }
+    language: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    //not sure how to note stars or language color
+    // languageColor: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // },
+    description: { 
+      type: DataTypes.STRING,
+      allowNull:true
+    },
+    // stars: {
+    //   type: ,
+    //   allowNull: 
+    // },
+    // user_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'user',
+    //     key: 'id'
+    //   }
+    // }
   },
   {
     sequelize,
