@@ -62,26 +62,25 @@ Project.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    //not sure how to note stars or language color
-    // languageColor: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false
-    // },
+    languageColor: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     description: { 
       type: DataTypes.STRING,
       allowNull:true
     },
-    // stars: {
-    //   type: ,
-    //   allowNull: 
-    // },
-    // user_id: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'user',
-    //     key: 'id'
-    //   }
-    // }
+     stars: {
+       type: DataTypes.INTEGER,
+       allowNull: true
+     },
+     user_id: {
+       type: DataTypes.INTEGER,
+       references: {
+         model: 'user',
+         key: 'id'
+       }
+     }
   },
   {
     sequelize,
