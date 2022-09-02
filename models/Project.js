@@ -20,13 +20,14 @@ class Project extends Model {
           'languageColor',
           'link',
           'description',
-          'stars'
+          'stars',
+          'user_id'
           [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE project.id = vote.project_id)'), 'vote_count']
         ],
         include: [
           {
             model: models.Comment,
-            attributes: ['id', 'comment_text', 'project_id', 'user_id', 'created_at'],
+            attributes: ['id', 'repo', 'language', 'languageColor', 'link', 'description', 'stars'],
             include: {
               model: models.User,
               attributes: ['username']
