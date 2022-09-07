@@ -14,13 +14,13 @@
   </form>
 </section>
 
-{{#if posts.length}}
+{{#if projects.length}}
 <section>
-  <h2>Your Posts</h2>
+  <h2>Your Projects</h2>
   <ol>
-    {{#each posts as |post|}}
+    {{#each projects as |project|}}
     <li>
-      {{> post-info post}}
+      {{> post-info project}}
       <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
     </li>
     {{/each}}

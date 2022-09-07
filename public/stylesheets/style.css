@@ -125,7 +125,7 @@ main {
 .post .title span {
   font-style: italic;
   font-size: 90%;
-  color: #7d7d7d;
+  color: red;
 }
 
 .edit-link {

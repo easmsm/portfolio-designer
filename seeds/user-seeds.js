@@ -3,55 +3,31 @@ const { User, Post } = require('../models');
 
 const userdata = [
   {
-    username: 'alesmonde0',
-    email: 'nwestnedge0@cbc.ca',
+    username: 'eclevela-1234',
+    email: 'eliot@email.com',
     password: 'password123'
   },
   {
-    username: 'jwilloughway1',
-    email: 'rmebes1@sogou.com',
+    username: 'easmsm',
+    email: 'emily@email.com',
     password: 'password123'
   },
   {
-    username: 'iboddam2',
-    email: 'cstoneman2@last.fm',
+    username: 'danielcnow',
+    email: 'daniel@email.com',
     password: 'password123'
   },
   {
-    username: 'dstanmer3',
-    email: 'ihellier3@goo.ne.jp',
+    username: 'tayyjohnson',
+    email: 'taylor@email.com',
     password: 'password123'
   },
   {
-    username: 'djiri4',
-    email: 'gmidgley4@weather.com',
+    username: 'whittenburgsa',
+    email: 'savannah@email.com',
     password: 'password123'
   },
-  {
-    username: 'msprague5',
-    email: 'larnout5@imdb.com',
-    password: 'password123'
-  },
-  {
-    username: 'mpergens6',
-    email: 'hnapleton6@feedburner.com',
-    password: 'password123'
-  },
-  {
-    username: 'tpenniell7',
-    email: 'kperigo7@china.com.cn',
-    password: 'password123'
-  },
-  {
-    username: 'msabbins8',
-    email: 'lmongain8@google.ru',
-    password: 'password123'
-  },
-  {
-    username: 'jmacarthur9',
-    email: 'bsteen9@epa.gov',
-    password: 'password123'
-  }
+ 
 ];
 
 const seedUsers = () => User.bulkCreate(userdata, {individualHooks: true});

@@ -1,0 +1,13 @@
+
+<img style="width: 200px" src="https://github.com/{{projects.[0].owner}}.png" alt="profile-img">
+
+<h2>{{projects.[0].owner}}</h2>
+
+<ol class="post-list">
+  
+  {{#each projects as |project|}}
+  <li>
+    {{> project-info project }}
+  </li>
+  {{/each}}
+</ol>
