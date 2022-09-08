@@ -25,6 +25,26 @@ router.get("/:username", (req, res) => {
       res.status(500).json(err);
     });
 });
+// FOR A GIVEN USERNAME, fetch the data from the API, Update db data.
+router.post('/update', (req,res) => {
+  Axios.get(`https://gh-pinned-repos.egoist.sh/?username=${req.body.username}`)
+        .then(async r => {
+            console.log(r)
+            projectsUpdate = r.data
+            for (let i = 0; i < projectsUpdate.length; i++) {
+              const projectdata = projectsUpdate[i]
+             await Project.update({
+                owner: projectdata.owner,
+                link: projectdata.link,
+                language: projectdata.language,
+                languageColor: projectdata.languageColor,
+                stars: projectdata.stars, 
+              }, {where: {
+                repo: projectdata.repo,
+              }}
+              )
+        }}
+)});
 
 router.post('/', (req, res) => {
   Project.create({
