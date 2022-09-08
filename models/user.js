@@ -38,7 +38,15 @@ User.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       default: 0
-    }
+    },
+    nameOfUser: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    userBio: {
+      type: DataTypes.STRING,
+      allowNull:false,
+    },
   },
   {
     hooks: {
