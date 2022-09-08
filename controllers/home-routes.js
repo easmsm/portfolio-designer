@@ -1,42 +1,26 @@
-const router = require('express').Router();
-const sequelize = require('../config/connection');
-const { Post, User, Comment, Vote } = require('../models');
+const router = require("express").Router();
+const sequelize = require("../config/connection");
+const { Project, User } = require("../models");
 
 // get all posts for homepage
-router.get('/', (req, res) => {
-  console.log('======================');
-  Post.findAll({
+router.get("/", (req, res) => {
+  console.log("======================");
+  User.findAll({
     attributes: [
-      'id',
-      'post_url',
-      'title',
-      'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-    ],
-    include: [
-      {
-        model: Comment,
-        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-        include: {
-          model: User,
-          attributes: ['username']
-        }
-      },
-      {
-        model: User,
-        attributes: ['username']
-      }
-    ]
+      "username",
+      "email",]
+    //   { exclude: ['password'] }],
+    // include: [{ model: Project }],
   })
-    .then(dbPostData => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
+    .then((dbUserData) => {
+      const users = dbUserData.map((user) => user.get({ plain: true }));
 
-      res.render('homepage', {
-        posts,
-        loggedIn: req.session.loggedIn
+      res.render("homepage", {
+        users,
+        // loggedIn: req.session.loggedIn,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
@@ -81,60 +65,30 @@ router.get('/:username', (req, res) => {
     });
 });
 
-// get single post
-router.get('/post/:id', (req, res) => {
-  Post.findOne({
+router.get("/login", (req, res) => {
+    res.render("login");
+}
+)
+
+router.get("/:username", (req, res) => {
+  Project.findAll({
     where: {
-      id: req.params.id
-    },
-    attributes: [
-      'id',
-      'post_url',
-      'title',
-      'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-    ],
-    include: [
-      {
-        model: Comment,
-        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-        include: {
-          model: User,
-          attributes: ['username']
-        }
-      },
-      {
-        model: User,
-        attributes: ['username']
-      }
-    ]
+      owner: req.params.username,
+    }
+    // include: [{ model: Project }],
   })
-    .then(dbPostData => {
-      if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
-        return;
+    .then((data) => {
+      if (!data) {
+        res.redirect("/login");
       }
 
-      const post = dbPostData.get({ plain: true });
-
-      res.render('single-post', {
-        post,
-        loggedIn: req.session.loggedIn
-      });
+      const projects = data.map((project) => project.get({plain: true}));
+    //   res.send(projects);
+      res.render("portfolio", {projects});
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
 });
-
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-
-  res.render('login');
-});
-
 module.exports = router;
