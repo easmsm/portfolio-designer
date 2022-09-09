@@ -35,13 +35,15 @@ router.post('/update', async (req,res) => {
     return {
       owner: data.owner,
       link: data.link,
+      image: data.image,
+      forks: data.forks,
       language: data.language,
       languageColor: data.languageColor,
-      stars: data.stars, }
-  })
-const updateRes= await Project.bulkCreate(recordsToUpdate, {where :{
-  repo: data.repo
-}})
+      stars: data.stars,
+      repo: data.repo, 
+    }})
+      
+const updateRes= await Project.bulkCreate(recordsToUpdate)
 console.log(updateRes)
 return res.send(200)
   // const updateRes = await Project.update({
