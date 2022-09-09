@@ -3,6 +3,8 @@ const { response } = require("express");
 const sequelize = require("../../config/connection");
 const { Project, User } = require("../../models");
 const Axios = require('axios');
+const { update } = require("../../models/project");
+const { data } = require("connect-session-sequelize/lib/model");
 
 // Check if user exists in database and display projects
 router.get("/:username", (req, res) => {
@@ -37,18 +39,23 @@ router.post('/update', async (req,res) => {
       languageColor: data.languageColor,
       stars: data.stars, }
   })
-  const updateRes = await Project.update({
-                    owner: projectdata.owner,
-                    link: projectdata.link,
-                    language: projectdata.language,
-                    languageColor: projectdata.languageColor,
-                    stars: projectdata.stars, 
-                  }, {where: {
-                    repo: projectdata.repo,
-                  }}
-                  )
-                  console.log (updateRes)
-                  return res.send(200)
+const updateRes= await Project.bulkCreate(recordsToUpdate, {where :{
+  repo: data.repo
+}})
+console.log(updateRes)
+return res.send(200)
+  // const updateRes = await Project.update({
+  //                   owner: projectdata.owner,
+  //                   link: projectdata.link,
+  //                   language: projectdata.language,
+  //                   languageColor: projectdata.languageColor,
+  //                   stars: projectdata.stars, 
+  //                 }, {where: {
+  //                   repo: projectdata.repo,
+  //                 }}
+  //                 )
+  //                 console.log (updateRes)
+  //                 return res.send(200)
 //         .then(async r => {
 //             console.log(r)
 //             projectsUpdate = r.data
