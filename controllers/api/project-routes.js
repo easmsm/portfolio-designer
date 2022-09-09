@@ -28,24 +28,36 @@ router.get("/:username", (req, res) => {
     });
 });
 // FOR A GIVEN USERNAME, fetch the data from the API, Update db data.
-router.post('/update', async (req,res) => {
+router.post('/update', async (req ,res) => {
   const axiosResponse = await Axios.get(`https://gh-pinned-repos.egoist.sh/?username=danielcnow`)
   const projectdata = axiosResponse.data
-  const recordsToUpdate = projectdata.map((data) => {
-    return {
-      owner: data.owner,
-      link: data.link,
-      image: data.image,
-      forks: data.forks,
-      language: data.language,
-      languageColor: data.languageColor,
-      stars: data.stars,
-      repo: data.repo, 
-    }})
+  
+  const statements = [];
+const tableName = "Users";
+
+for (let i = 0; i < projectdata.length; i++) {
+  statements.push(
+    sequelize.query(
+      `UPDATE ${tableName} 
+      SET owner='${projectdata[i].owner}' 
+      SET link='${projectdata[i].link}' 
+      SET image='${projectdata[i].image}' 
+      SET forks='${projectdata[i].forks}' 
+      SET language='${projectdata[i].language}' 
+      SET languageColor='${projectdata[i].languageColor}' 
+      SET stars='${projectdata[i].stars}' 
+      SET repo='${projectdata[i].repo}' 
+      WHERE id=${i};`
+    )
+  );
+}
+const result = await Promise.all(statements);
+console.log(result); 
+return res.send(200);
       
-const updateRes= await Project.bulkCreate(recordsToUpdate)
-console.log(updateRes)
-return res.send(200)
+// const updateRes= await Project.bulkCreate(recordsToUpdate)
+// console.log(updateRes)
+// return res.send(200)
   // const updateRes = await Project.update({
   //                   owner: projectdata.owner,
   //                   link: projectdata.link,
